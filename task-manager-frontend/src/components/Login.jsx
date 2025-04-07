@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { Button, TextField, Typography, Paper, Box } from '@mui/material';
 
 const Login = () => {
@@ -25,7 +25,6 @@ const Login = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        bgcolor: 'grey.100',
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 import { Button, TextField, Typography, Paper, Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -10,6 +13,7 @@ const Tasks = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editedTitle, setEditedTitle] = useState('');
   const { user, logout } = useContext(AuthContext);
+  const { toggleTheme, mode } = useContext(ThemeContext);
 
   useEffect(() => {
     fetchTasks();
@@ -75,13 +79,15 @@ const Tasks = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        bgcolor: 'grey.100',
         py: 4,
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 600 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography variant="h5">Tasks</Typography>
+          <IconButton onClick={toggleTheme} color="inherit">
+              {mode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+          </IconButton>
           <Button variant="contained" color="error" onClick={logout}>
             Logout
           </Button>

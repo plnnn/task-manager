@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Tasks from './components/Tasks.jsx';
-import { AuthContext } from './context/AuthContext.jsx';
+import { AuthContext } from './contexts/AuthContext.jsx';
 
 function App() {
   const { user } = useContext(AuthContext);
