@@ -1,17 +1,34 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { Button, TextField, Typography, Paper, Box } from '@mui/material';
+import { Button, TextField, Typography, Paper, Box, Alert } from '@mui/material';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(email, password);
+    setError('');
+
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      await register(email, password);
+    } catch (err) {
+      setError('A user with this email already exists.');
+    }
   };
 
   const handleLoginClick = () => {
@@ -31,6 +48,11 @@ const Register = () => {
         <Typography variant="h5" align="center" gutterBottom>
           Register
         </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <TextField
             label="Email"

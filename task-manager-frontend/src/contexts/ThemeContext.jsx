@@ -74,6 +74,20 @@ export const AppThemeProvider = ({ children }) => {
           },
         },
       },
+      MuiAlert: {
+        styleOverrides: {
+          root: ({ ownerState, theme }) => ({
+            borderRadius: theme.shape.borderRadius,
+            ...(ownerState.severity === 'error' && {
+              backgroundColor: mode === 'light' ? '#ffebee' : '#d32f2f',
+              color: mode === 'light' ? '#d32f2f' : '#ffffff',
+            }),
+          }),
+          icon: {
+            color: 'inherit !important',
+          },
+        },
+      },
     },
   }), [mode]);
 

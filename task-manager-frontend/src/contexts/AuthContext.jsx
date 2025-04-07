@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
     if (data.token) {
       localStorage.setItem('token', data.token);
       setUser({ token: data.token });
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
     if (data.token) {
       localStorage.setItem('token', data.token);
       setUser({ token: data.token });

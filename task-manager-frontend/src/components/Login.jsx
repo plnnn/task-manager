@@ -1,17 +1,24 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { Button, TextField, Typography, Paper, Box } from '@mui/material';
+import { Button, TextField, Typography, Paper, Box, Alert } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    setError('');
+
+    try {
+      await login(email, password);
+    } catch (err) {
+      setError('Invalid credentials.');
+    }
   };
 
   const handleRegisterClick = () => {
@@ -31,6 +38,11 @@ const Login = () => {
         <Typography variant="h5" align="center" gutterBottom>
           Login
         </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <TextField
             label="Email"
