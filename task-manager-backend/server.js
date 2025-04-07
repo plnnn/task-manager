@@ -82,4 +82,19 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
   });
 });
 
+// update task
+app.put('/tasks/:id', authenticateToken, (req, res) => {
+  const { title } = req.body;
+  const { id } = req.params;
+  db.run(
+    'UPDATE tasks SET title = ? WHERE id = ? AND userId = ?',
+    [title, id, req.user.id],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Task not found or not owned by user' });
+      res.json({ id, title });
+    }
+  );
+});
+
 app.listen(3001, () => console.log('Server running on port 3001'));
